@@ -24,6 +24,11 @@ pnpm-debug.log*
 # Docker
 docker-compose.override.yml
 
+# Playwright
+test-results/
+playwright-report/
+blob-report/
+
 # Local-only prompt/instruction files
 CLAUDE.md
 SKILL.md

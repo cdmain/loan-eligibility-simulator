@@ -16,4 +16,9 @@ app.use(VueQueryPlugin, {
   },
 })
 
+// Global error handler — logs uncaught errors during development
+app.config.errorHandler = (err, instance, info) => {
+  console.error('[Vue Error]', { err, component: instance?.$options.name, info })
+}
+
 app.mount('#app')

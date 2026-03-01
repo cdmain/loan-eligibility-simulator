@@ -1,12 +1,17 @@
 <script setup lang="ts">
-import { ref, computed, nextTick } from 'vue'
+import { ref, computed, nextTick, defineAsyncComponent } from 'vue'
 import AppHeader from '@/components/AppHeader.vue'
 import LandingHero from '@/components/LandingHero.vue'
 import LoanForm from '@/components/LoanForm.vue'
-import EligibilityResults from '@/components/EligibilityResults.vue'
+import ErrorBoundary from '@/components/ErrorBoundary.vue'
 import { useEligibility } from '@/composables/useEligibility'
 import { useLoanCalculation } from '@/composables/useLoanCalculation'
 import type { LoanFormValues, ExpenseItem } from '@/types/loan.types'
+
+// Lazy-load the results panel — it's not needed until after submission
+const EligibilityResults = defineAsyncComponent(
+  () => import('@/components/EligibilityResults.vue'),
+)
 
 // --- View state ---
 const currentView = ref<'landing' | 'simulator'>('landing')
@@ -61,43 +66,45 @@ const eligibilityResult = computed(() => result.value ?? null)
     />
 
     <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-      <!-- Landing Page -->
-      <LandingHero
-        v-if="currentView === 'landing'"
-        @start="navigateTo('simulator')"
-      />
+      <ErrorBoundary>
+        <!-- Landing Page -->
+        <LandingHero
+          v-if="currentView === 'landing'"
+          @start="navigateTo('simulator')"
+        />
 
-      <!-- Simulator Page -->
-      <template v-else>
-        <div class="mb-6 text-center">
-          <h2 class="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-            Your Loan Assessment
-          </h2>
-          <p class="mt-1 text-sm text-low-emphasis">
-            Fill in your financial details to check eligibility.
-          </p>
-        </div>
-
-        <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
-          <!-- Left: Form -->
-          <LoanForm
-            :is-submitting="isEvaluating"
-            @submit="handleSubmit"
-          />
-
-          <!-- Right: Results -->
-          <div
-            ref="resultsRef"
-            class="scroll-mt-24 lg:sticky lg:top-24 lg:self-start"
-          >
-            <EligibilityResults
-              :result="eligibilityResult"
-              :is-loading="isEvaluating"
-              :affordability-percentage="affordabilityPercentage"
-            />
+        <!-- Simulator Page -->
+        <template v-else>
+          <div class="mb-6 text-center">
+            <h2 class="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+              Your Loan Assessment
+            </h2>
+            <p class="mt-1 text-sm text-low-emphasis">
+              Fill in your financial details to check eligibility.
+            </p>
           </div>
-        </div>
-      </template>
+
+          <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+            <!-- Left: Form -->
+            <LoanForm
+              :is-submitting="isEvaluating"
+              @submit="handleSubmit"
+            />
+
+            <!-- Right: Results -->
+            <div
+              ref="resultsRef"
+              class="scroll-mt-24 lg:sticky lg:top-24 lg:self-start"
+            >
+              <EligibilityResults
+                :result="eligibilityResult"
+                :is-loading="isEvaluating"
+                :affordability-percentage="affordabilityPercentage"
+              />
+            </div>
+          </div>
+        </template>
+      </ErrorBoundary>
 
       <!-- Footer -->
       <footer class="mt-12 border-t border-outline-variant pt-6 text-center">
