@@ -23,3 +23,9 @@ pnpm-debug.log*
 
 # Docker
 docker-compose.override.yml
+
+# Local-only prompt/instruction files
+CLAUDE.md
+SKILL.md
+colours.css
+copilot-instructions.md

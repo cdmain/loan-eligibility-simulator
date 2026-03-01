@@ -27,14 +27,14 @@ pnpm dev
 # Build and run with Docker / Rancher Desktop
 docker compose up --build
 
-# → http://localhost:8080
+# → http://localhost:3000
 ```
 
 Or without Compose:
 
 ```bash
 docker build -t loan-simulator .
-docker run -p 8080:80 loan-simulator
+docker run -p 3000:80 loan-simulator
 ```
 
 ---
@@ -158,7 +158,7 @@ pnpm build
 
 # Docker
 docker compose up --build
-# Open http://localhost:8080
+# Open http://localhost:3000
 ```
 
 ---
