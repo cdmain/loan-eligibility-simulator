@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { defineAsyncComponent } from 'vue'
-import { Landmark, AlertTriangle } from 'lucide-vue-next'
+import { Landmark } from 'lucide-vue-next'
 
 /**
  * Dynamically import the loan simulator module via Module Federation.
@@ -46,8 +46,12 @@ const LoanSimulator = defineAsyncComponent({
           <Landmark :size="16" />
         </div>
         <div>
-          <h1 class="text-sm font-bold text-foreground">Nova Platform</h1>
-          <p class="text-xs text-low-emphasis">Micro-Frontend Shell</p>
+          <h1 class="text-sm font-bold text-foreground">
+            Nova Platform
+          </h1>
+          <p class="text-xs text-low-emphasis">
+            Micro-Frontend Shell
+          </p>
         </div>
       </div>
     </header>

@@ -12,6 +12,8 @@
     "build:shell": "pnpm --filter @loan-simulator/shell build",
     "lint": "pnpm --filter './apps/**' --parallel lint",
     "type-check": "pnpm --filter './apps/**' --parallel type-check",
+    "test": "pnpm --filter @loan-simulator/app test",
+    "test:e2e": "pnpm --filter @loan-simulator/app test:e2e",
     "preview": "pnpm --filter @loan-simulator/app preview"
   },
   "engines": {
