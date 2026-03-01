@@ -1,0 +1,268 @@
+@import 'tailwindcss';
+
+/*
+ * Custom dark-mode variant using class strategy.
+ * Toggles when .dark is applied to any ancestor element.
+ */
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Design tokens mapped from the Capitec-inspired colour system.
+ * Using @theme inline so CSS var() references resolve at runtime,
+ * enabling light/dark switching without a rebuild.
+ */
+@theme inline {
+  /* Surface & background */
+  --color-background: var(--background);
+  --color-background-disabled: var(--background-disabled);
+  --color-overlay: var(--overlay);
+  --color-dim: var(--dim);
+  --color-surface: var(--surface);
+  --color-surface-inverse: var(--surface-inverse);
+  --color-on-surface-inverse: var(--on-surface-inverse);
+
+  /* Foreground / text */
+  --color-foreground: var(--foreground);
+  --color-foreground-disabled: var(--foreground-disabled);
+  --color-medium-emphasis: var(--medium-emphasis);
+  --color-low-emphasis: var(--low-emphasis);
+
+  /* Primary */
+  --color-primary: var(--primary);
+  --color-on-primary: var(--on-primary);
+  --color-primary-container: var(--primary-container);
+  --color-on-primary-container: var(--on-primary-container);
+  --color-primary-inverse: var(--primary-inverse);
+
+  /* Secondary */
+  --color-secondary: var(--secondary);
+  --color-on-secondary: var(--on-secondary);
+  --color-secondary-container: var(--secondary-container);
+  --color-on-secondary-container: var(--on-secondary-container);
+
+  /* Tertiary */
+  --color-tertiary: var(--tertiary);
+  --color-on-tertiary: var(--on-tertiary);
+
+  /* Selection */
+  --color-selected: var(--selected);
+  --color-on-selected: var(--on-selected);
+  --color-selected-container: var(--selected-container);
+  --color-on-selected-container: var(--on-selected-container);
+
+  /* Outline */
+  --color-outline: var(--outline);
+  --color-outline-variant: var(--outline-variant);
+
+  /* Semantic status */
+  --color-error: var(--error);
+  --color-on-error: var(--on-error);
+  --color-error-container: var(--error-container);
+  --color-on-error-container: var(--on-error-container);
+
+  --color-warning: var(--warning);
+  --color-on-warning: var(--on-warning);
+  --color-warning-container: var(--warning-container);
+  --color-on-warning-container: var(--on-warning-container);
+
+  --color-success: var(--success);
+  --color-on-success: var(--on-success);
+  --color-success-container: var(--success-container);
+  --color-on-success-container: var(--on-success-container);
+
+  --color-info: var(--info);
+  --color-on-info: var(--on-info);
+  --color-info-container: var(--info-container);
+  --color-on-info-container: var(--on-info-container);
+
+  --color-negative: var(--negative);
+  --color-on-negative: var(--on-negative);
+  --color-negative-container: var(--negative-container);
+  --color-on-negative-container: var(--on-negative-container);
+
+  /* Financial */
+  --color-transact: var(--transact);
+  --color-on-transact: var(--on-transact);
+  --color-credit: var(--credit);
+  --color-on-credit: var(--on-credit);
+
+  /* Border radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+}
+
+/*
+ * Light-mode design tokens (default)
+ * Values sourced from the Capitec-inspired colour palette.
+ */
+@layer base {
+  :root {
+    --background: #f8fafd;
+    --background-disabled: #1f272e0c;
+    --overlay: #06121b48;
+    --dim: #f0f3fa;
+
+    --foreground: #1f272e;
+    --foreground-disabled: #1f272e28;
+    --medium-emphasis: #4a535c;
+    --low-emphasis: #6d7885;
+
+    --surface: #ffffff;
+    --surface-inverse: #293138;
+    --on-surface-inverse: #f0f3fa;
+
+    --primary: #2f70ef;
+    --on-primary: #ffffff;
+    --primary-container: #e8edff;
+    --on-primary-container: #1655d1;
+    --primary-inverse: #98b8fe;
+
+    --secondary: #0033a0;
+    --on-secondary: #ffffff;
+    --secondary-container: #d6e3fe;
+    --on-secondary-container: #0033a0;
+
+    --tertiary: #f9423a;
+    --on-tertiary: #ffffff;
+
+    --selected: #004bb8;
+    --on-selected: #ffffff;
+    --selected-container: #0051ff;
+    --on-selected-container: #0033a0;
+
+    --outline: #a3acb7;
+    --outline-variant: #cfd5e0;
+
+    --error: #e7000b;
+    --on-error: #ffffff;
+    --error-container: #fff0f0;
+    --on-error-container: #e7000b;
+
+    --warning: #d66700;
+    --on-warning: #ffffff;
+    --warning-container: #fff0e8;
+    --on-warning-container: #b14c02;
+
+    --success: #009243;
+    --on-success: #ffffff;
+    --success-container: #e3fae1;
+    --on-success-container: #007b38;
+
+    --info: #00929f;
+    --on-info: #ffffff;
+    --info-container: #e2f8fc;
+    --on-info-container: #007681;
+
+    --negative: #545f6a;
+    --on-negative: #ffffff;
+    --negative-container: #eaedf4;
+    --on-negative-container: #4a535c;
+
+    --transact: #2f70ef;
+    --on-transact: #ffffff;
+    --credit: #e61414;
+    --on-credit: #ffffff;
+  }
+
+  /*
+   * Dark-mode tokens — activated when .dark is on an ancestor.
+   */
+  .dark {
+    --background: #181c20;
+    --background-disabled: #23272e;
+    --overlay: #f0f3fa48;
+    --dim: #293138;
+
+    --foreground: #f0f3fa;
+    --foreground-disabled: #f0f3fa28;
+    --medium-emphasis: #cfd5e0;
+    --low-emphasis: #a3acb7;
+
+    --surface: #23272e;
+    --surface-inverse: #ffffff;
+    --on-surface-inverse: #293138;
+
+    --primary: #98b8fe;
+    --on-primary: #293138;
+    --primary-container: #1655d1;
+    --on-primary-container: #e8edff;
+    --primary-inverse: #2f70ef;
+
+    --secondary: #d6e3fe;
+    --on-secondary: #0033a0;
+    --secondary-container: #0033a0;
+    --on-secondary-container: #d6e3fe;
+
+    --tertiary: #f6767a;
+    --on-tertiary: #293138;
+
+    --selected: #98b8fe;
+    --on-selected: #293138;
+    --selected-container: #1655d1;
+    --on-selected-container: #e8edff;
+
+    --outline: #4a535c;
+    --outline-variant: #293138;
+
+    --error: #f6767a;
+    --on-error: #293138;
+    --error-container: #a5132a;
+    --on-error-container: #fff0ef;
+
+    --warning: #fca461;
+    --on-warning: #293138;
+    --warning-container: #b14c02;
+    --on-warning-container: #fff0e8;
+
+    --success: #71cb85;
+    --on-success: #293138;
+    --success-container: #007b38;
+    --on-success-container: #e3fae1;
+
+    --info: #61c7d4;
+    --on-info: #293138;
+    --info-container: #007681;
+    --on-info-container: #e2f8fc;
+
+    --negative: #aebbca;
+    --on-negative: #293138;
+    --negative-container: #4a535c;
+    --on-negative-container: #eaedf4;
+
+    --transact: #98b8fe;
+    --on-transact: #293138;
+    --credit: #f6767a;
+    --on-credit: #293138;
+  }
+
+  /* Smooth theme transitions */
+  * {
+    border-color: var(--outline-variant);
+  }
+
+  body {
+    font-family:
+      system-ui,
+      -apple-system,
+      'Segoe UI',
+      Roboto,
+      Helvetica,
+      Arial,
+      sans-serif;
+  }
+
+  /* Hide number input spinners */
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type='number'] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+}

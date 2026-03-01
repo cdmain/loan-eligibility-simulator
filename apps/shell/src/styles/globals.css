@@ -1,0 +1,52 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-dim: var(--dim);
+  --color-primary: var(--primary);
+  --color-on-primary: var(--on-primary);
+  --color-low-emphasis: var(--low-emphasis);
+  --color-medium-emphasis: var(--medium-emphasis);
+  --color-outline-variant: var(--outline-variant);
+}
+
+@layer base {
+  :root {
+    --background: #f8fafd;
+    --foreground: #1f272e;
+    --surface: #ffffff;
+    --dim: #f0f3fa;
+    --primary: #2f70ef;
+    --on-primary: #ffffff;
+    --low-emphasis: #6d7885;
+    --medium-emphasis: #4a535c;
+    --outline-variant: #cfd5e0;
+  }
+
+  .dark {
+    --background: #181c20;
+    --foreground: #f0f3fa;
+    --surface: #23272e;
+    --dim: #293138;
+    --primary: #98b8fe;
+    --on-primary: #293138;
+    --low-emphasis: #a3acb7;
+    --medium-emphasis: #cfd5e0;
+    --outline-variant: #293138;
+  }
+
+  body {
+    font-family:
+      system-ui,
+      -apple-system,
+      'Segoe UI',
+      Roboto,
+      Helvetica,
+      Arial,
+      sans-serif;
+  }
+}
